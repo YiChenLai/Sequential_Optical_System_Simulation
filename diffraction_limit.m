@@ -1,11 +1,12 @@
 function diffra_limit = diffraction_limit(lambda,aperture,BFL,EFL,focal_plane_position)
 
-z = focal_plane_position;
+z = focal_plane_position+(EFL-BFL);
 size = round(2*aperture^2/(lambda*z))*2*10;
 if mod(size,2)==0
     size = size+1;
 end
 
+y = linspace(-aperture/2,aperture/2,size);
 f_number = z/aperture;
 cutoff_freq = 1/(lambda*f_number);
 
@@ -20,7 +21,7 @@ OTF = fftshift(fft(LSF));
 MTF = abs(OTF);
 MTF = MTF./max(MTF);
 
-y = linspace(-aperture/2,aperture/2,size);
+
 a = linspace(-size/2,size/2,size);
 f = a*(1/aperture);
 

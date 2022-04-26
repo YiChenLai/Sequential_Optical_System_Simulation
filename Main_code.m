@@ -1,28 +1,29 @@
 clc; clear; colordef black; format long; close all;
 %% Parameter Setting
 %------------------%
-lambda = 546.1;
+lambda = 546.1; % Unit : nm
 sk16_schott = 1.62286;
-f4_hoya = 1.62058;
-surface_num = 6;
-distance = [5, 2, 5.26, 1.25, 4.69, 2.25, 2];
-material = [1, sk16_schott, 1, f4_hoya, 1, sk16_schott, 1];
-y_radius = [21.48138, -124.1, -19.1, 22, 328.9, -16.7];
-aperture = 1;
+surface_num = 2;
+distance = [0.01, 0.01, 0.112384569991885];   % Unit : mm
+material = [1, sk16_schott, 1]; % Unit : mm
+y_radius = [inf, -0.07]; % Unit : mm
+aperture = 0.05;   % Unit : mm
 %------------------%
 %------------------%
 ang_x = 0;
 ang_y = 0;
-cross_diameter_num = 2001;
+cross_diameter_num = 501;
 %------------------%
 %------------------%
-Use_Paraxial_Solve = 1;     % 0 = No, 1 = Yes
+Use_Paraxial_Solve = 0;         % 0 = No, 1 = Yes
 %------------------%
-View_Lens = 0;              % 0 = No, 1 = Yes
-Spot_Diagram = 0;           % 0 = No, 1 = Yes
-Transmission_Plane = 0;     % 0 = No, 1 = Yes
-Point_Spread_Function = 0;  % 0 = No, 1 = Yes
-Line_Spread_Function = 1;   % 0 = No, 1 = Yes
+View_Lens = 1;                  % 0 = No, 1 = Yes
+    display_line = 21;
+Spot_Diagram = 1;               % 0 = No, 1 = Yes
+    display_num_spot_per_diameter = 21;
+Transmission_Plane = 1;         % 0 = No, 1 = Yes
+Point_Spread_Function = [1, 1];  % 0 = No, 1 = Yes, perspective:[yz, xy]
+Line_Spread_Function = 1;       % 0 = No, 1 = Yes
 
 
 %% Source Setting
@@ -84,7 +85,16 @@ end
 Data = data_reshape(s_x_all,s_y_all,s_z_all,cross_diameter_num);
 %% View Lens
 if View_Lens == 1
-    index = find(Data.X_1{1}(1,:)==0);
+    index_y_plane = find(Data.X_1{1}(1,:)==0);
+    display_line_position = aperture/2*linspace(-1,1,display_line);
+    index_display_lines = [];
+    for n = 1:display_line
+        inx = find(Data.Y_1{1}(1,:)==display_line_position(n));
+        index_display_lines = [index_display_lines,inx];
+    end
+    index = intersect(index_y_plane,index_display_lines);
+    
+    
     figure('units','normalized','outerposition',[0 0 1 1])
     for n = 1:numel(distance)
         if material(n)==1
@@ -94,7 +104,8 @@ if View_Lens == 1
             line_color = 'w';
             lin_wid = 3;
         end
-        plot(Data.Z_1{n}(:,index)-sum(distance(1:surface_num)),Data.Y_1{n}(:,index),'color',line_color,'linewidth',lin_wid)
+        plot(Data.Z_1{n}(:,index)-sum(distance(1:surface_num)),Data.Y_1{n}(:,index), ...
+            'color',line_color,'linewidth',lin_wid)
         hold on
     end
     axis equal
@@ -103,6 +114,7 @@ if View_Lens == 1
     grid on
     xlabel('z (mm)')
     ylabel('y (mm)')
+    title('View Lens')
     pause(0.01)
 end
 %% Spot Diagram
@@ -110,10 +122,11 @@ if Spot_Diagram == 1
     figure
     plot(Data.X_1{end}(2,:),Data.Y_1{end}(2,:),'.')
     axis equal
+    title('Spot Diagram')
     pause(0.01)
 end
 %% Optical Path Difference (OPD) at Transmission Plane
-[trans_plane_data] = trans_plane_position_and_optical_path(surface_num, distance, material, Data, L, M, N);
+trans_plane_data = trans_plane_position_and_optical_path(surface_num, distance, material, Data, L, M, N);
 
 if Transmission_Plane == 1
     figure
@@ -137,7 +150,7 @@ if Line_Spread_Function == 1
     plot(LSF_data.Monitor_y,LSF_data.Power_normalize,'linewidth',.5,'color',[0.93,0.69,0.13])
     hold on
     plot(diffra_limit.y,diffra_limit.I,':','linewidth',.5,'color','w')
-    title(['Strehl Ratio = ',num2str(LSF_data.Strehl_ratio)])
+    title('Line Spread Function',['Strehl Ratio = ',num2str(LSF_data.Strehl_ratio)])
     grid on
     ax = gca;
     ax.GridColor = [0.32 0.32 0.32];
@@ -145,36 +158,50 @@ if Line_Spread_Function == 1
 end
 
 %% Point Spread Function
-if Point_Spread_Function == 1
-    PSF_data = point_spread_function(lambda, aperture, trans_plane_data, focal_plane_position);
+if sum(Point_Spread_Function) > 0
+    PSF_data = point_spread_function(lambda, aperture, trans_plane_data, focal_plane_position, Point_Spread_Function);
     %%
-    plot_z = PSF_data.Monitor_z-trans_plane_data.dz;
-    [~, index_z_1] = find(PSF_data.Intensity_normalize==1);
-    [~, index_z_2] = min(abs(plot_z-focal_plane_position));
-    
-    
-    figure
-    p1 = pcolor(plot_z,PSF_data.Monitor_y,PSF_data.Power_normalize);
-    p2 = line([plot_z(index_z_1) plot_z(index_z_1)],[PSF_data.Monitor_y(1) PSF_data.Monitor_y(end)], ...
-        'color','w','linewidth',0.5,'linestyle',':');
-    p3 = line([plot_z(index_z_2) plot_z(index_z_2)],[PSF_data.Monitor_y(1) PSF_data.Monitor_y(end)], ...
-        'color','y','linewidth',0.5,'linestyle','-');
-    title('PSF Intensity',['Strehl Ratio = ',num2str(PSF_data.Strehl_ratio)])
-    legend([p2, p3],'Best Focus Plane','Focus Plane','Location','northwest','NumColumns',1)
-    colormap('jet') 
-    shading interp
-    xlabel('z (mm)')
-    ylabel('y (mm)')
-    colorbar
-    pause(0.01)
-    figure
-    plot(PSF_data.Monitor_y,PSF_data.Power_normalize(:,index_z_2),'linewidth',.5,'color',[0.93,0.69,0.13])
-    hold on
-    title(['Strehl Ratio = ',num2str(PSF_data.Strehl_ratio)])
-    grid on
-    ax = gca;
-    ax.GridColor = [0.32 0.32 0.32];
-    pause(0.01)
+    if Point_Spread_Function(1)==1
+        plot_z = PSF_data.Monitor_z-trans_plane_data.dz;
+        [~, index_z_1] = find(PSF_data.Intensity_normalize==1);
+        [~, index_z_2] = min(abs(plot_z-focal_plane_position));
+        disp(['Best Focus Plane = ',num2str(plot_z(index_z_1)),' mm'])
+
+        figure
+        p1 = pcolor(plot_z,PSF_data.Monitor_y,PSF_data.Power_normalize);
+        p2 = line([plot_z(index_z_1) plot_z(index_z_1)],[PSF_data.Monitor_y(1) PSF_data.Monitor_y(end)], ...
+            'color','w','linewidth',0.5,'linestyle',':');
+        p3 = line([plot_z(index_z_2) plot_z(index_z_2)],[PSF_data.Monitor_y(1) PSF_data.Monitor_y(end)], ...
+            'color','y','linewidth',0.5,'linestyle','-');
+        title('Point Spread Function YZ',['Best Focus Plane = ',num2str(plot_z(index_z_1)),' mm'])
+        legend([p2, p3],'Best Focus Plane','Focus Plane','Location','northwest','NumColumns',1)
+        colormap('jet') 
+        shading interp
+        xlabel('z (mm)')
+        ylabel('y (mm)')
+        colorbar
+        pause(0.01)
+%         figure
+%         plot(PSF_data.Monitor_y,PSF_data.Power_normalize(:,index_z_2),'linewidth',.5,'color',[0.93,0.69,0.13])
+%         hold on
+%         title(['Strehl Ratio = ',num2str(PSF_data.Strehl_ratio)])
+%         grid on
+%         ax = gca;
+%         ax.GridColor = [0.32 0.32 0.32];
+%         pause(0.01)
+    end
+    %%
+    if Point_Spread_Function(2)==1
+        figure
+        surf(PSF_data.Monitor_x,PSF_data.Monitor_y,PSF_data.Power_normalize_xy)
+        title('Point Spread Function XY',['Strehl Ratio = ',num2str(PSF_data.Strehl_ratio_xy)])
+        colormap('jet') 
+        shading interp
+        xlabel('x (mm)')
+        ylabel('y (mm)')
+        colorbar
+        pause(0.01)
+    end
 end
 
 %% MTF
@@ -189,12 +216,16 @@ a = linspace(-size/2,size/2,size);
 f = a*(1/D);
 
 figure
-plot(f,MTF,'linewidth',.5,'color',[0.93,0.69,0.13])
-hold on
 plot(diffra_limit.f,diffra_limit.MTF',':','linewidth',.5,'color','w')
+hold on
+plot(f,MTF,'linewidth',.5,'color',[0.93,0.69,0.13])
 xlim([0,diffra_limit.cutoff_freq])
+title('Diffraction MTF')
 xlabel('cycles / mm')
-ylabel('MTF')
+ylabel('Modulation')
 grid on
+legend('Diffraction Limit',['Ang ',num2str(ang_y),' degree'])
 ax = gca;
 ax.GridColor = [0.32 0.32 0.32];
+
+
