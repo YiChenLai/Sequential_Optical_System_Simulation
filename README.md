@@ -10,11 +10,12 @@
 此系統全部都使用 Matlab 環境開發，裡面會用到 Parallel Computing Toolbox 進行平行運算，來加速部分功能的計算效率。內部的功能包含 :
 
 1. 光線追跡 (Ray Tracing)
-2. 近軸影像解 (Paraxial Image Solve)
+2. 點列圖 (Spot Diagram)
 3. 光程差分布 (Optical Path Difference)
 4. 線擴散函數 (Line Spread Function)
 5. 點擴散函數 (Point Spread Function)
 6. 調製傳遞函數 (Modulation Transfer Function, MTF)
+7. 近軸影像解 (Paraxial Image Solve)
 
 (其中，功能 4 ~ 6 有使用到 Parallel Computing Toolbox。)
 
@@ -31,8 +32,66 @@
 
 ![image]()
 
+---
 ### 1. 光線追跡 (Ray Tracing)
+這是透鏡模擬最基本的功能，光線在入射到不同介質時，跟據司乃耳定理 (Snell's Law)，光線的入射的方向向量與入射介面的法向量夾角，稱為入射角，會受到折射率變化，在出射介面的出射角產生偏折。此系統有提供不同的視角，範例效果如下圖 : 
 
-這是透鏡模擬最基本的功能，光線在入射到不同介質時，跟據司乃耳定理 (Snell's Law)，光線的入射的方向向量與入射介面的法向量夾角，稱為入射角 ${\theta_i}$，會受到折射率變化，在出射介面的出射角 ${\theta_t}$ 產生偏折，關係式如下 : 
+* XZ View
+  
+  ![image]()
 
+* YZ View
+  
+    ![image]()
+  
+* 3D View
+
+    ![image]()
+
+---
+### 2. 點列圖 (Spot Diagram)
+點列圖為物面的光線經過光學系統後，在像面所成像的效果。使用者可以透過點列圖來初步分析光學系統的成像品質與光學像差，如 : 球面像差 (Spherical Abberation)、彗星像差 (Coma Abberation) 與像散像差 (Astigmatism Abberation)。範例效果如下圖 : 
+
+![image]()
+
+---
+### 3. 光程差分布 (Optical Path Difference)
+此功能可以了解出射光學系統時的光程累積，並且可以換算成相位分布，使用者可以使用此功能進行像差修正的設計 (此系統不含像差修正功能)。
+
+![image]()
+
+---
+### 4. 線擴散函數 (Line Spread Function)
+線擴散函數的計算我使用惠更斯-菲涅耳原理 (Huygens–Fresnel principle) 進行運算。將前面取得光程分布換算成相位分布，並取YZ平面的一維相位分布作為點波源的初始相位，計算出射平面的點波源到成像面的疊加，就可以得到成像面的能量分布。範例效果如下圖 :
+
+![image]()
+
+---
+### 5. 點擴散函數 (Point Spread Function)
+點擴散函數與線擴散函數的原理相同，區別在於使用二維相位分布。同時，我也將出射端傳播的能量分布也計算出來，並且將最高能量標記出來，可以做為最佳聚焦位置 (Best Focus)。範例效果如下圖 :
+
+* 成像面的能量分布
+  
+  ![image]()
+
+* 出射系統後的能量分布  
+  
+  ![image]()
+
+---
+### 6. 調製傳遞函數 (Modulation Transfer Function, MTF)
+MTF 是可以評價光學系統在成像效果的重要指標。MTF 是計算單位距離內的黑白條紋在成像面的亮度最大值與最小值的比值。隨著單位距離內的黑白條紋越多，光學系統存在繞射極限，也就是艾里斑 (Airy Disk)，意味著沒有辦法完美聚焦成一個點光源，也就代表無法做到完美成像。黑白條紋的亮度對比會逐漸下降，最後就糊成一團無法辨識。這就代表在已定的光圈 (Aperture) 大小與設計焦聚下的 Airy Disk 算得的 MTF 即為理想 MTF 值，而光學系統的 MTF 值則是使用焦平面上的能量分布進行計算。此系統是使用線擴散函數得到的能量分布進行快速傅立葉轉換 (Fast Fourier Transform, FFT)即可求得光學系統的 MTF。範例效果如下 :
+
+![image]()
+
+---
+
+### 7. 近軸影像解 (Paraxial Image Solve)
+這是透過光線轉換矩陣分析 (Ray Transfer Matrix Analysis)，又稱 ABCD 矩陣分析 (ABCD Matrix Analysis)。將透鏡參數按照矩陣的規則進行輸入，就可以計算出的光學系統的近軸影像解。一般的透鏡組在 CODE V 中的進軸影像解，等於後焦長 (Back Focus Length, BFL)，其定義為 : 
+
+    系統最後一個光學表面頂點至後方焦點的距離。
+
+而 ABCD 矩陣不只可以計算 BFL，同時可以計算等效焦距 (Effective Focal Length)，其定義為 : 
+
+    系統的後主平面 (Back Principal Plane, BPP) 到後方焦點的距離。
 
