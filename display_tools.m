@@ -153,6 +153,7 @@ classdef display_tools
             figure('color','k')
             plot(Data.X_1{end}(2,:),Data.Y_1{end}(2,:),'.')
             axis equal; title('Spot Diagram')
+            xlabel('x (mm)'); ylabel('y (mm)')
             pause(0.01)
         end
         
@@ -160,6 +161,7 @@ classdef display_tools
             figure('color','k')
             pcolor(trans_plane_data.x,trans_plane_data.y,trans_plane_data.OP-min(trans_plane_data.OP,[],'all'))
             title('Transmission Optical Path Difference')
+            xlabel('x (mm)'); ylabel('y (mm)')
             axis equal; shading flat; colorbar; colormap('jet')
             pause(0.01)
         end
@@ -169,6 +171,7 @@ classdef display_tools
             plot(LSF_data.Monitor_y,LSF_data.Power_normalize,'linewidth',.5,'color',[0.93,0.69,0.13])
             hold on
             plot(diffra_limit.y,diffra_limit.I,':','linewidth',.5,'color','w')
+            xlabel('x (mm)'); ylabel('Normalize Intensity')
             title('Line Spread Function',['Strehl Ratio = ',num2str(LSF_data.Strehl_ratio)])
             grid on
             ax = gca; ax.GridColor = [0.32 0.32 0.32];
@@ -198,7 +201,7 @@ classdef display_tools
                 figure('color','k')
                 surf(PSF_data.Monitor2_x,PSF_data.Monitor2_y,PSF_data.Power_normalize_xy)
                 title('Point Spread Function XY',['Strehl Ratio = ',num2str(PSF_data.Strehl_ratio_xy)])
-                colormap('jet'); shading interp; xlabel('x (mm)'); ylabel('y (mm)'); colorbar
+                colormap('jet'); shading interp; xlabel('x (mm)'); ylabel('y (mm)'); zlabel('Normalize Intensity'); colorbar
                 pause(0.01)
             end
         end
