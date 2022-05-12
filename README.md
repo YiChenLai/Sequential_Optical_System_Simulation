@@ -105,10 +105,10 @@ MTF 是可以評價光學系統在成像效果的重要指標。MTF 是計算單
 
 按照上述的範例將參數輸入進 CODE V 中，如下圖 : 
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_setting_1.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_setting_2.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_setting_1.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_setting_2.png)
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vsCODEV/CODEV_setting.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_setting.png)
 
 可以看到近軸影像解顯示 0.1605 mm，同時，BFL 與 EFL 都等於 0.1605 mm。
 
@@ -117,7 +117,7 @@ MTF 是可以評價光學系統在成像效果的重要指標。MTF 是計算單
 ### 光線追跡 (Ray Tracing)
 
 ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_lens_view_yz.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_setting_2.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/SOSS_lens_view_yz.png)
 
 ### 點列圖 (Spot Diagram)
 
