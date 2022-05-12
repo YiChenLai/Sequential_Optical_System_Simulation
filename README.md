@@ -116,25 +116,25 @@ MTF 是可以評價光學系統在成像效果的重要指標。MTF 是計算單
 
 ### 光線追跡 (Ray Tracing)
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_lens_view_yz.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_setting_2.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_lens_view_yz.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_setting_2.png)
 
 ### 點列圖 (Spot Diagram)
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_spot_diagram.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/SOSS_spot_diagram.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_spot_diagram.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/SOSS_spot_diagram.png)
 
 ### 線擴散函數 (LSF)
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_LSF.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/SOSS_LSF.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_LSF.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/SOSS_LSF.png)
 
 ### 點擴散函數 (PSF)
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_PSF.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/SOSS_PSF.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_PSF.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/SOSS_PSF.png)
 
 ### 調製傳遞函數 (MTF)
 
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/CODEV_MTF.png)
-![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/SOSS_MTF.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/CODEV_MTF.png)
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/vs_CODEV/SOSS_MTF.png)
