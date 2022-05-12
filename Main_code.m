@@ -4,7 +4,7 @@ clc; clear; colordef black; format long; close all;
 lambda = 546.1; % Unit : nm
 sk16_schott = 1.62286;
 surface_num = 2;
-distance = [0.01, 0.02, 0.15];   % Unit : mm
+distance = [0.01, 0.02, 0.16055];   % Unit : mm
 material = [1, sk16_schott, 1]; % Unit : mm
 y_radius = [inf, -0.1]; % Unit : mm
 aperture = 0.05;   % Unit : mm
@@ -14,17 +14,19 @@ ang_x = 0;
 ang_y = 0;
 cross_diameter_num = 201;
 %------------------%
+
+%------------------------ Application Switch ------------------------%
 %------------------%
-Use_Paraxial_Solve = 0;         % 0 = No, 1 = Yes
+Use_Paraxial_Solve = 1;         % 0 = OFF, 1 = ON
 %------------------%
-View_Lens = 1;                  % 0 = No, 1 = Yes
-    viewplane = 3;              % 1 = XZ, 2 = YZ, 3 = 3D
+View_Lens = 1;                  % 0 = OFF, 1 = ON
+    viewplane = 2;              % 1 = XZ, 2 = YZ, 3 = 3D
     display_line = 11;
-Spot_Diagram = 1;               % 0 = No, 1 = Yes
-Transmission_Plane = 1;         % 0 = No, 1 = Yes
-Line_Spread_Function = 1;       % 0 = No, 1 = Yes
-MTF = 1;                        % 0 = No, 1 = Yes
-Point_Spread_Function = [1; 1]; % 0 = No, 1 = Yes; perspective:[yz, xy]
+Spot_Diagram = 1;               % 0 = OFF, 1 = ON
+Transmission_Plane = 1;         % 0 = OFF, 1 = ON
+Line_Spread_Function = 1;       % 0 = OFF, 1 = ON
+MTF = 1;                        % 0 = OFF, 1 = ON
+Point_Spread_Function = [1; 1]; % 0 = OFF, 1 = ON; perspective:[yz, xy]
 
 %% Lens data
 Lens.lambda = lambda*1e-6;
