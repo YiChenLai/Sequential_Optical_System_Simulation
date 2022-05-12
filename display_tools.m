@@ -23,7 +23,7 @@ classdef display_tools
                     end
                     index = intersect(index_x,index_y);
                     
-                    figure('units','normalized','outerposition',[0 0 1 1])
+                    figure('units','normalized','outerposition',[0 0 1 1],'color','k')
                     for n = 1:numel(Lens.distance)
                         if Lens.material(n)==1
                             line_color = 'g';        lin_wid = 0.1;
@@ -75,7 +75,7 @@ classdef display_tools
                     end
                     index = intersect(on_axis_index,display_index);
                     
-                    figure('units','normalized','outerposition',[0 0 1 1])
+                    figure('units','normalized','outerposition',[0 0 1 1],'color','k')
                     for n = 1:numel(Lens.distance)
                         if Lens.material(n)==1
                             line_color = 'g';
@@ -120,7 +120,7 @@ classdef display_tools
                     end
                     index = intersect(on_axis_index,display_index);
                     
-                    figure('units','normalized','outerposition',[0 0 1 1])
+                    figure('units','normalized','outerposition',[0 0 1 1],'color','k')
                     for n = 1:numel(Lens.distance)
                         if Lens.material(n)==1
                             line_color = 'g';
@@ -150,21 +150,22 @@ classdef display_tools
         end
         
         function spot_diagram(Data)
-            figure
+            figure('color','k')
             plot(Data.X_1{end}(2,:),Data.Y_1{end}(2,:),'.')
             axis equal; title('Spot Diagram')
             pause(0.01)
         end
         
         function transmission_plane(trans_plane_data)
-            figure
-            pcolor(trans_plane_data.x,trans_plane_data.y,trans_plane_data.OP)
+            figure('color','k')
+            pcolor(trans_plane_data.x,trans_plane_data.y,trans_plane_data.OP-min(trans_plane_data.OP,[],'all'))
+            title('Transmission Optical Path Difference')
             axis equal; shading flat; colorbar; colormap('jet')
             pause(0.01)
         end
         
         function line_spread_function(LSF_data,diffra_limit)
-            figure
+            figure('color','k')
             plot(LSF_data.Monitor_y,LSF_data.Power_normalize,'linewidth',.5,'color',[0.93,0.69,0.13])
             hold on
             plot(diffra_limit.y,diffra_limit.I,':','linewidth',.5,'color','w')
@@ -181,7 +182,7 @@ classdef display_tools
                 [~, index_z_2] = min(abs(plot_z-focal_plane_position));
                 disp(['Best Focus Plane = ',num2str(plot_z(index_z_1)),' mm'])
                 
-                figure
+                figure('color','k')
                 p1 = pcolor(plot_z,PSF_data.Monitor1_y,PSF_data.Power_normalize);
                 p2 = line([plot_z(index_z_1) plot_z(index_z_1)],[PSF_data.Monitor1_y(1) PSF_data.Monitor1_y(end)], ...
                     'color','w','linewidth',0.5,'linestyle',':');
@@ -194,7 +195,7 @@ classdef display_tools
             end
             %%
             if Switch(2)==1
-                figure
+                figure('color','k')
                 surf(PSF_data.Monitor2_x,PSF_data.Monitor2_y,PSF_data.Power_normalize_xy)
                 title('Point Spread Function XY',['Strehl Ratio = ',num2str(PSF_data.Strehl_ratio_xy)])
                 colormap('jet'); shading interp; xlabel('x (mm)'); ylabel('y (mm)'); colorbar
@@ -212,7 +213,7 @@ classdef display_tools
             a = linspace(-size/2,size/2,size);
             f = a*(1/D);
 
-            figure
+            figure('color','k')
             plot(diffra_limit.f,diffra_limit.MTF',':','linewidth',.5,'color','w')
             hold on
             plot(f,MTF,'linewidth',.5,'color',[0.93,0.69,0.13])
