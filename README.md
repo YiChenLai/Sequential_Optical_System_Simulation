@@ -30,7 +30,7 @@
 * Material : SK16-SCHOTT (n = 1.62286)
 * Entrance pupil diameter : 0.05 mm
 
-![image]()
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/lens_demo.png)
 
 ---
 ### 1. 光線追跡 (Ray Tracing)
@@ -38,33 +38,33 @@
 
 * XZ View
   
-  ![image]()
+  ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/lens_view_xz.png)
 
 * YZ View
   
-    ![image]()
+    ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/lens_view_yz.png)
   
 * 3D View
 
-    ![image]()
+    ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/lens_view_3D.png)
 
 ---
 ### 2. 點列圖 (Spot Diagram)
 點列圖為物面的光線經過光學系統後，在像面所成像的效果。使用者可以透過點列圖來初步分析光學系統的成像品質與光學像差，如 : 球面像差 (Spherical Abberation)、彗星像差 (Coma Abberation) 與像散像差 (Astigmatism Abberation)。範例效果如下圖 : 
 
-![image]()
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/spot_diagram.png)
 
 ---
 ### 3. 光程差分布 (Optical Path Difference)
 此功能可以了解出射光學系統時的光程累積，並且可以換算成相位分布，使用者可以使用此功能進行像差修正的設計 (此系統不含像差修正功能)。
 
-![image]()
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/optical_path_difference.png)
 
 ---
 ### 4. 線擴散函數 (Line Spread Function)
 線擴散函數的計算我使用惠更斯-菲涅耳原理 (Huygens–Fresnel principle) 進行運算。將前面取得光程分布換算成相位分布，並取YZ平面的一維相位分布作為點波源的初始相位，計算出射平面的點波源到成像面的疊加，就可以得到成像面的能量分布。範例效果如下圖 :
 
-![image]()
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/LSF.png)
 
 ---
 ### 5. 點擴散函數 (Point Spread Function)
@@ -72,17 +72,17 @@
 
 * 成像面的能量分布
   
-  ![image]()
+  ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/PSF_XY.png)
 
 * 出射系統後的能量分布  
   
-  ![image]()
+  ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/PSF_YZ.png)
 
 ---
 ### 6. 調製傳遞函數 (Modulation Transfer Function, MTF)
 MTF 是可以評價光學系統在成像效果的重要指標。MTF 是計算單位距離內的黑白條紋在成像面的亮度最大值與最小值的比值。隨著單位距離內的黑白條紋越多，光學系統存在繞射極限，也就是艾里斑 (Airy Disk)，意味著沒有辦法完美聚焦成一個點光源，也就代表無法做到完美成像。黑白條紋的亮度對比會逐漸下降，最後就糊成一團無法辨識。這就代表在已定的光圈 (Aperture) 大小與設計焦聚下的 Airy Disk 算得的 MTF 即為理想 MTF 值，而光學系統的 MTF 值則是使用焦平面上的能量分布進行計算。此系統是使用線擴散函數得到的能量分布進行快速傅立葉轉換 (Fast Fourier Transform, FFT)即可求得光學系統的 MTF。範例效果如下 :
 
-![image]()
+![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/MTF.png)
 
 ---
 
