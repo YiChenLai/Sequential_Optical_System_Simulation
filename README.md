@@ -95,7 +95,7 @@ MTF 是可以評價光學系統在成像效果的重要指標。MTF 是計算單
 
 ![image](https://github.com/YiChenLai/Sequencial_Optical_System_Simulation/blob/master/image/BFL_EFL.png)
 
-而且，**我有設計近軸影像解的開關，若在輸入透鏡參數不知道成像面要設定多遠時，可以先設把最後一個平面的 thickness 設為 0 ，並且將 Parameter Setting 的 Use_Paraxial_Solve 的參數設為 1 (ON)，系統將會自動把 EFL 值帶入。**
+而且，**我有設計近軸影像解的開關，若在輸入透鏡參數不知道成像面要設定多遠時，可以先設把最後一個平面的 thickness 設為 0 ，並且將 Parameter Setting 的 Use_Paraxial_Solve 的參數設為 1 (ON)，系統將會自動把 BFL 值帶入。**
 
 **但使用者想要自己設定成像面，要記得把 Use_Paraxial_Solve 的參數設為 0 (OFF)。**
 
