@@ -6,7 +6,7 @@ sk16_schott = 1.62286;
 surface_num = 2;
 distance = [0.01, 0.02, 0.16055];   % Unit : mm
 material = [1, sk16_schott, 1]; % Unit : mm
-y_radius = [inf, -0.1]; % Unit : mm
+y_radius = [0.1, -0.1]; % Unit : mm
 aperture = 0.05;   % Unit : mm
 %------------------%
 %------------------%
@@ -28,14 +28,6 @@ Line_Spread_Function = 1;       % 0 = OFF, 1 = ON
 MTF = 1;                        % 0 = OFF, 1 = ON
 Point_Spread_Function = [1; 1]; % 0 = OFF, 1 = ON; perspective:[yz, xy]
 
-%% Lens data
-Lens.lambda = lambda*1e-6;
-Lens.surface_num = surface_num;
-Lens.distance = distance;
-Lens.material = material;
-Lens.y_radius = y_radius;
-Lens.aperture = aperture;
-
 %% Source Setting
 lambda = lambda*1e-6;   % nm -> mm
 [s_x, s_y, s_z, L, M, N] = light_source_setting(aperture,distance,cross_diameter_num,ang_x,ang_y);
@@ -48,6 +40,14 @@ if Use_Paraxial_Solve == 1
     material(end+1) = 1;
     y_radius(end+1) = inf;
 end
+
+%% Lens data
+Lens.lambda = lambda*1e-6;
+Lens.surface_num = surface_num;
+Lens.distance = distance;
+Lens.material = material;
+Lens.y_radius = y_radius;
+Lens.aperture = aperture;
 
 %% Ray Tracing
 curvature = 1./y_radius;
