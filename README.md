@@ -1,4 +1,4 @@
-# 序列式光學模擬系統 (Sequencial Optical System Simulation)
+# 序列式光學模擬系統 (Sequential Optical System Simulation)
 
 ## 前言
 這個整套系統是提供給光學透鏡模擬有興趣的朋友所寫的，希望你們用的愉快 : )。同時，我希望將這個系統可以更加完善，若在使用的過程成中，發現有誤或是更好的算法，都歡迎大家一起開發此系統。
